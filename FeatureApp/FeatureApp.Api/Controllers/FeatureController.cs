@@ -2,7 +2,6 @@
 {
     using System.Threading.Tasks;
     using FeatureApp.Common;
-    using FeatureApp.Common.Helpers;
     using FeatureApp.Common.Models;
     using FeatureApp.Core;
     using Microsoft.AspNetCore.Http;
@@ -29,34 +28,21 @@
         /// <summary>
         /// Gets feature toggle accessiblity when requested via email and feature name.
         /// </summary>
-        /// <param name="email">Feature access email. </param>
-        /// <param name="featureName">Feature name. </param>
+        /// <param name="request">Request to get toggle feature.</param>
         /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] string email, [FromQuery] string featureName)
+        public async Task<IActionResult> Get([FromQuery] GetFeatureRequest request)
         {
-            if (string.IsNullOrWhiteSpace(email))
+            if (request == null)
             {
-                return this.BadRequest($"{nameof(email)} query string is required.");
-            }
-            else if (string.IsNullOrWhiteSpace(featureName))
-            {
-                return this.BadRequest($"{nameof(featureName)} query string is required.");
-            }
-            else if (!EmailValidator.IsValid(email))
-            {
-                return this.BadRequest($"{email} is not in valid email format.");
+                return this.BadRequest($"{nameof(request)} is required.");
             }
 
-            var response = await this.featureService.GetFeatureAsync(new GetFeatureRequest
-            {
-                Email = email,
-                FeatureName = featureName,
-            });
+            var response = await this.featureService.GetFeatureAsync(request);
 
             return response != null
                 ? this.Ok(response)
-                : this.StatusCode(StatusCodes.Status404NotFound, $"{featureName} is not found.");
+                : this.StatusCode(StatusCodes.Status404NotFound, $"{request.FeatureName} is not found.");
         }
 
         /// <summary>
@@ -70,18 +56,6 @@
             if (request == null)
             {
                 return this.BadRequest($"{nameof(request)} is required.");
-            }
-            else if (string.IsNullOrWhiteSpace(request.Email))
-            {
-                return this.BadRequest($"{nameof(request.Email)} is required.");
-            }
-            else if (string.IsNullOrWhiteSpace(request.FeatureName))
-            {
-                return this.BadRequest($"{nameof(request.FeatureName)} is required.");
-            }
-            else if (!EmailValidator.IsValid(request.Email))
-            {
-                return this.BadRequest($"{request.Email} is not in valid email format.");
             }
 
             var response = await this.featureService.CreateOrUpdateFeatureAsync(request);

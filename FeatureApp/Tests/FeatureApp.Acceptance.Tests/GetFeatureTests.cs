@@ -26,7 +26,7 @@ namespace FeatureApp.Acceptance.Tests
         {
             await this.steps.GivenISetupService();
             await this.steps.WhenIGetFeature(new GetFeatureRequest());
-            await this.steps.ThenResponseShouldBe(HttpStatusCode.BadRequest, "email query string is required.");
+            await this.steps.ThenResponseShouldContains(HttpStatusCode.BadRequest, "The Email field is required.");
         }
 
         [Fact]
@@ -34,11 +34,19 @@ namespace FeatureApp.Acceptance.Tests
         {
             await this.steps.GivenISetupService();
             await this.steps.WhenIGetFeature(new GetFeatureRequest() { Email = TestConstants.UserEmail });
-            await this.steps.ThenResponseShouldBe(HttpStatusCode.BadRequest, "featureName query string is required.");
+            await this.steps.ThenResponseShouldContains(HttpStatusCode.BadRequest, "The FeatureName field is required.");
         }
 
         [Fact]
-        public async Task ShouldReturnNotFoundWhenFeatureDoesNotExistForGetFeature()
+        public async Task ShouldReturnBadRequestWhenEmailIsNotValidFormatForGetFeature()
+        {
+            await this.steps.GivenISetupService();
+            await this.steps.WhenIGetFeature(new GetFeatureRequest() { Email = "invalidformat", FeatureName = TestConstants.FeatureName });
+            await this.steps.ThenResponseShouldContains(HttpStatusCode.BadRequest, "The Email field is not a valid e-mail address.");
+        }
+
+        [Fact]
+        public async Task ShouldReturnNotFoundWWhenFeatureDoesNotExistForGetFeature()
         {
             await this.steps.GivenISetupService();
             await this.steps.WhenIGetFeature(new GetFeatureRequest() { Email = TestConstants.UserEmail, FeatureName = "notexist" });
@@ -54,7 +62,7 @@ namespace FeatureApp.Acceptance.Tests
         }
 
         [Fact]
-        public async Task ShouldReturnOkWithCanAccessIsTrueWhenUserEmailIsEncodedForGetFeature1()
+        public async Task ShouldReturnOkWithCanAccessIsTrueWhenUserEmailIsEncodedForGetFeature()
         {
             await this.steps.GivenISetupService();
             await this.steps.WhenIGetFeature(new GetFeatureRequest() { Email = WebUtility.UrlEncode(TestConstants.UserEmail), FeatureName = TestConstants.FeatureName });

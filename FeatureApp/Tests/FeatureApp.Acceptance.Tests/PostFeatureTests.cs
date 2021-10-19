@@ -27,7 +27,7 @@ namespace FeatureApp.Acceptance.Tests
         {
             await this.steps.GivenISetupService();
             await this.steps.WhenIPostFeature(new CreateFeatureRequest());
-            await this.steps.ThenResponseShouldBe(HttpStatusCode.BadRequest, "Email is required.");
+            await this.steps.ThenResponseShouldContains(HttpStatusCode.BadRequest, "The Email field is required.");
         }
 
         [Fact]
@@ -35,7 +35,20 @@ namespace FeatureApp.Acceptance.Tests
         {
             await this.steps.GivenISetupService();
             await this.steps.WhenIPostFeature(new CreateFeatureRequest() { Email = TestConstants.UserEmail });
-            await this.steps.ThenResponseShouldBe(HttpStatusCode.BadRequest, "FeatureName is required.");
+            await this.steps.ThenResponseShouldContains(HttpStatusCode.BadRequest, "The FeatureName field is required.");
+        }
+
+        [Fact]
+        public async Task ShouldReturnBadRequestWhenEmailIsNotValidFormatForPostFeature()
+        {
+            await this.steps.GivenISetupService();
+            await this.steps.WhenIPostFeature(new CreateFeatureRequest
+            {
+                Email = "invalidformat",
+                FeatureName = "test",
+                Enable = true,
+            });
+            await this.steps.ThenResponseShouldContains(HttpStatusCode.BadRequest, "The Email field is not a valid e-mail address.");
         }
 
         [Fact]
@@ -118,11 +131,11 @@ namespace FeatureApp.Acceptance.Tests
             });
             await this.steps.ThenResponseShouldBe(HttpStatusCode.NotModified, string.Empty);
         }
-
         private static void CreateRequest(out string email, out string featureName)
         {
             email = $"{Guid.NewGuid()}@hotmail.com";
             featureName = $"test-{Guid.NewGuid()}";
         }
+
     }
 }

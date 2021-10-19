@@ -61,5 +61,16 @@
 
             return await Task.FromResult(this);
         }
+
+        public async Task<FeatureSteps> ThenResponseShouldContains(HttpStatusCode code, string response)
+        {
+            var content = await this.response.Content.ReadAsStringAsync();
+
+            Assert.Equal(code, this.response.StatusCode);
+            Assert.Contains(response, content);
+
+            return await Task.FromResult(this);
+        }
+
     }
 }

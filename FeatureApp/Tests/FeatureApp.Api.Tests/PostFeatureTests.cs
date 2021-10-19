@@ -24,7 +24,7 @@ namespace FeatureApp.Api.Tests
         {
             await this.steps.GivenISetupService();
             await this.steps.WhenIPostFeature(new CreateFeatureRequest());
-            await this.steps.ThenResponseShouldBe(HttpStatusCode.BadRequest, "Email is required.");
+            await this.steps.ThenResponseShouldContains(HttpStatusCode.BadRequest, "The Email field is required.");
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace FeatureApp.Api.Tests
         {
             await this.steps.GivenISetupService();
             await this.steps.WhenIPostFeature(new CreateFeatureRequest() { Email = TestConstants.UserEmail });
-            await this.steps.ThenResponseShouldBe(HttpStatusCode.BadRequest, "FeatureName is required.");
+            await this.steps.ThenResponseShouldContains(HttpStatusCode.BadRequest, "The FeatureName field is required.");
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace FeatureApp.Api.Tests
                 FeatureName = "test",
                 Enable = true,
             });
-            await this.steps.ThenResponseShouldBe(HttpStatusCode.BadRequest, "invalidformat is not in valid email format.");
+            await this.steps.ThenResponseShouldContains(HttpStatusCode.BadRequest, "The Email field is not a valid e-mail address.");
         }
 
         [Fact]

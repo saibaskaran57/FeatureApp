@@ -23,7 +23,7 @@ namespace FeatureApp.Api.Tests
         {
             await this.steps.GivenISetupService();
             await this.steps.WhenIGetFeature(new GetFeatureRequest());
-            await this.steps.ThenResponseShouldBe(HttpStatusCode.BadRequest, "email query string is required.");
+            await this.steps.ThenResponseShouldContains(HttpStatusCode.BadRequest, "The Email field is required.");
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace FeatureApp.Api.Tests
         {
             await this.steps.GivenISetupService();
             await this.steps.WhenIGetFeature(new GetFeatureRequest() { Email = TestConstants.UserEmail });
-            await this.steps.ThenResponseShouldBe(HttpStatusCode.BadRequest, "featureName query string is required.");
+            await this.steps.ThenResponseShouldContains(HttpStatusCode.BadRequest, "The FeatureName field is required.");
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace FeatureApp.Api.Tests
         {
             await this.steps.GivenISetupService();
             await this.steps.WhenIGetFeature(new GetFeatureRequest() { Email = "invalidformat", FeatureName = TestConstants.FeatureName });
-            await this.steps.ThenResponseShouldBe(HttpStatusCode.BadRequest, "invalidformat is not in valid email format.");
+            await this.steps.ThenResponseShouldContains(HttpStatusCode.BadRequest, "The Email field is not a valid e-mail address.");
         }
 
         [Fact]
