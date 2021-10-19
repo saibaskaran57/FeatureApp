@@ -20,3 +20,7 @@ https://featureapp.azurewebsites.net/swagger/index.html
 
 # Testing
 You can run `Acceptance.Tests` that are available in the code repository which show cases the coverage to the feature app api.
+
+# Important Note
+1. You will not be able to run `Api.Tests` because I've excluded Azure Cosmos DB secret key(`CosmosDb.Key`) to be checked into repository.
+2. `CosmosRepository.cs` best to be tested with actual Azure CosmosDB instance because its a simple DAL which get's real confidence on the testing.
