@@ -21,6 +21,9 @@ https://featureapp.azurewebsites.net/swagger/index.html
 # Testing
 You can run `Acceptance.Tests` that are available in the code repository which show cases the coverage to the feature app api.
 
+# Deployment
+I've used Visual Studio published profiles which you can directly deploy to Azure App Service instance locally using SSO. In real-world environment, we can configure CD to deploy the ARM template designed in `ServiceDependancies/FeatureApp - Web Deploy/profile.arm.json`.
+
 # Important Note
-1. You will not be able to run `Api.Tests` because I've excluded Azure Cosmos DB secret key(`CosmosDb.Key`) to be checked into repository.
+1. You will not be able to run `Api.Tests` because I've excluded Azure Cosmos DB secret key(`CosmosDb.Key`) to be checked into repository. When CI to be configured, we can make changes to read from environment variables.
 2. `CosmosRepository.cs` best to be tested with actual Azure CosmosDB instance because its a simple DAL which get's real confidence on the testing.
