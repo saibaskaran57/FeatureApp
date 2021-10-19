@@ -26,7 +26,7 @@
         }
 
         /// <summary>
-        /// Creates a Cosmos DB database and a container with the specified partition key.
+        /// Creates feature service.
         /// </summary>
         /// <returns>Added Cosmos Feature Service to Service collection.</returns>
         private static IServiceCollection AddFeatureService(this IServiceCollection services)
