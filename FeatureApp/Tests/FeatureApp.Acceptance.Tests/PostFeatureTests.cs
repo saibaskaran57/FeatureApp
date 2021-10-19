@@ -41,11 +41,13 @@ namespace FeatureApp.Acceptance.Tests
         [Fact]
         public async Task ShouldReturnOkForPostFeature()
         {
+            CreateRequest(out string email, out string featureName);
+
             await this.steps.GivenISetupService();
             await this.steps.WhenIPostFeature(new CreateFeatureRequest
             {
-                Email = Guid.NewGuid().ToString(),
-                FeatureName = $"test-{Guid.NewGuid()}",
+                Email = email,
+                FeatureName = featureName,
                 Enable = true,
             });
             await this.steps.ThenResponseShouldBe(HttpStatusCode.OK, string.Empty);
@@ -119,7 +121,7 @@ namespace FeatureApp.Acceptance.Tests
 
         private static void CreateRequest(out string email, out string featureName)
         {
-            email = Guid.NewGuid().ToString();
+            email = $"{Guid.NewGuid()}@hotmail.com";
             featureName = $"test-{Guid.NewGuid()}";
         }
     }

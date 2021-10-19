@@ -17,9 +17,19 @@
         /// <param name="next">The next middleware to be executed.</param>
         /// <param name="loggerFactory">The logger factory.</param>
         public ExceptionMiddlewareExtensions(RequestDelegate next, ILoggerFactory loggerFactory)
+            : this(next, loggerFactory.CreateLogger<ExceptionMiddlewareExtensions>())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExceptionMiddlewareExtensions"/> class.
+        /// </summary>
+        /// <param name="next">The next middleware to be executed.</param>
+        /// <param name="logger">The logger.</param>
+        public ExceptionMiddlewareExtensions(RequestDelegate next, ILogger<ExceptionMiddlewareExtensions> logger)
         {
             this.next = next;
-            this.logger = loggerFactory.CreateLogger<ExceptionMiddlewareExtensions>();
+            this.logger = logger;
         }
 
         /// <summary>
