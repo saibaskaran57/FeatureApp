@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>FeatureApp.Api</AssemblyName>
+    <RootNamespace>FeatureApp.Api</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FeatureApp.Common\Common.csproj" />
+    <ProjectReference Include="..\FeatureApp.Core\Core.csproj" />
+    <ProjectReference Include="..\FeatureApp.Dependancies\Dependancies.csproj" />
+  </ItemGroup>
+
+</Project>
