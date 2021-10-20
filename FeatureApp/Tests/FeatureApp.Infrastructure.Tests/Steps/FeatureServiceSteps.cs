@@ -40,7 +40,7 @@
         public async Task<FeatureServiceSteps> AndRepositoryContainsData()
         {
             this.repository.Setup(x => x.GetAsync(It.IsAny<string>())).Returns(
-                Task.FromResult(new Feature(TestConstants.FeatureName, TestConstants.UserEmail, false)));
+                Task.FromResult(new Feature(TestConstants.FeatureName, TestConstants.UserEmail, true)));
             this.repository.Setup(x => x.UpdateAsync(It.IsAny<string>(), It.IsAny<Feature>()));
 
             return await Task.FromResult(this);

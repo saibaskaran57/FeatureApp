@@ -48,7 +48,7 @@ namespace FeatureApp.Infrastructure.Tests
             {
                 Email = TestConstants.UserEmail,
                 FeatureName = TestConstants.FeatureName.ToUpperInvariant(),
-                Enable = true,
+                Enable = false,
             });
             await this.steps.ThenShouldUpdateFeatureSuccessfully();
         }
@@ -62,7 +62,7 @@ namespace FeatureApp.Infrastructure.Tests
             {
                 Email = TestConstants.UserEmail,
                 FeatureName = TestConstants.FeatureName,
-                Enable = true,
+                Enable = false,
             });
             await this.steps.ThenShouldUpdateFeatureSuccessfully();
         }
@@ -90,7 +90,7 @@ namespace FeatureApp.Infrastructure.Tests
             {
                 Email = TestConstants.UserEmail,
                 FeatureName = TestConstants.FeatureName,
-                Enable = false,
+                Enable = true,
             });
             await this.steps.ThenShouldNotModifyFeature();
         }

@@ -42,9 +42,9 @@
 
             return result != null
                 ? new GetFeatureResponse
-                    {
-                        CanAccess = IsAuthorized(request.Email, result.Email),
-                    }
+                {
+                    CanAccess = IsAuthorized(request.Email, result.Email) && result.Enable,
+                }
                 : null;
         }
 
